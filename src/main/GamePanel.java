@@ -53,7 +53,7 @@ public class GamePanel extends JPanel implements Runnable {
 
 	@Override
 	public void run() {
-
+/*
 		double drawInterval = 1000000000/FPS; //0.016667; seconds
 		double nextDrawTime = System.nanoTime() + drawInterval;
 		while(gameThread != null) {
@@ -75,7 +75,25 @@ public class GamePanel extends JPanel implements Runnable {
 				e.printStackTrace();
 			}
 		}
+		*/
 		
+		//DELTA ACCUMULATOR METHOD
+		double drawInterval = 1000000000/FPS;
+		double delta = 0;
+		long lastTime = System.nanoTime();
+		long currentTime;
+		
+		while(gameThread!=null) {
+			currentTime = System.nanoTime();
+			delta += (currentTime - lastTime) / drawInterval;
+			lastTime = currentTime;
+			
+			if(delta >= 1) {
+				update();
+				repaint();
+delta--;				
+			}
+		}
 	}
 
 	public void update() {
