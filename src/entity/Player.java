@@ -13,20 +13,13 @@ import main.KeyHandler;
 import main.CollisionChecker;
 
 public class Player extends Entity {
-	GamePanel gp;
-	KeyHandler keyH;
-	public boolean moving;
-	int moved;
 
-	public final int screenX;
-	public final int screenY;
+	KeyHandler keyH;
 
 	public Player(GamePanel gp, KeyHandler keyH) {
 		this.gp = gp;
 		this.keyH = keyH;
-
-		screenX = gp.screenWidth / 2 - (gp.tileSize / 2);
-		screenY = gp.screenHeight / 2 - (gp.tileSize / 2);
+		this.isVisible = true;
 
 //		solidArea = new Rectangle();
 //		solidArea.x = 0;
@@ -72,7 +65,7 @@ public class Player extends Entity {
 	}
 
 	public void update() {
-
+		super.update();
 		collisionOn = false;
 		if (moving)
 			collisionOn = false;
@@ -96,7 +89,7 @@ public class Player extends Entity {
 		} else if (keyH.leftPressed == true && !moving) {
 			direction = "left";
 
-			 gp.cChecker.checkTile(this);
+			gp.cChecker.checkTile(this);
 			if (!collisionOn) {
 				moving = true;
 				x -= 1;
@@ -105,7 +98,7 @@ public class Player extends Entity {
 		} else if (keyH.rightPressed == true && !moving) {
 			direction = "right";
 
-			 gp.cChecker.checkTile(this);
+			gp.cChecker.checkTile(this);
 			if (!collisionOn) {
 				moving = true;
 				x += 1;
@@ -162,8 +155,8 @@ public class Player extends Entity {
 
 			}
 			if (!keyH.controlPressed)
-				spriteCounter++;
-			if (spriteCounter > 10) {
+				spriteCounter += animationSpeed;
+			if (spriteCounter > 100) {
 				if (spriteNum == 1)
 					spriteNum = 2;
 				else if (spriteNum == 2)
@@ -172,46 +165,46 @@ public class Player extends Entity {
 			}
 		}
 	}
-
-	public void draw(Graphics2D g2) {
 //
-		//g2.setColor(Color.white);
-		//g2.fillRect(x, y, gp.tileSize, gp.tileSize);
-
-		BufferedImage image = null;
-
-		switch (direction) {
-		case "up":
-			if (spriteNum == 1)
-				image = up1;
-
-			if (spriteNum == 2)
-				image = up2;
-			break;
-		case "down":
-			if (spriteNum == 1)
-				image = down1;
-
-			if (spriteNum == 2)
-				image = down2;
-			break;
-		case "left":
-			if (spriteNum == 1)
-				image = left1;
-
-			if (spriteNum == 2)
-				image = left2;
-			break;
-		case "right":
-			if (spriteNum == 1)
-				image = right1;
-
-			if (spriteNum == 2)
-				image = right2;
-			break;
-		}
-
-		g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
-	}
+//	public void draw(Graphics2D g2) {
+////
+//		//g2.setColor(Color.white);
+//		//g2.fillRect(x, y, gp.tileSize, gp.tileSize);
+//
+//		BufferedImage image = null;
+//
+//		switch (direction) {
+//		case "up":
+//			if (spriteNum == 1)
+//				image = up1;
+//
+//			if (spriteNum == 2)
+//				image = up2;
+//			break;
+//		case "down":
+//			if (spriteNum == 1)
+//				image = down1;
+//
+//			if (spriteNum == 2)
+//				image = down2;
+//			break;
+//		case "left":
+//			if (spriteNum == 1)
+//				image = left1;
+//
+//			if (spriteNum == 2)
+//				image = left2;
+//			break;
+//		case "right":
+//			if (spriteNum == 1)
+//				image = right1;
+//
+//			if (spriteNum == 2)
+//				image = right2;
+//			break;
+//		}
+//
+//		g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+//	}
 
 }

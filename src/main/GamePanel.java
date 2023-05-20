@@ -8,6 +8,7 @@ import java.awt.Toolkit;
 
 import javax.swing.JPanel;
 import entity.Player;
+import entity.Monster;
 import tile.TileManager;
 
 public class GamePanel extends JPanel implements Runnable {
@@ -30,6 +31,11 @@ public class GamePanel extends JPanel implements Runnable {
 	// FPS
 	int FPS = 60;
 	
+	//NOSE
+	
+	public final int screenX;
+	public final int screenY;
+	
 	
 	
 	
@@ -38,7 +44,9 @@ public class GamePanel extends JPanel implements Runnable {
 	Thread gameThread;
 	public CollisionChecker cChecker = new CollisionChecker(this);
 	public Player player = new Player(this, keyH);
+	public Monster monster = new Monster(this, 24, 22, 4);
 
+	
 	public GamePanel(){
 		this.setPreferredSize(new Dimension(screenWidth, screenHeight));
 		this.setBackground(Color.black);
@@ -46,6 +54,9 @@ public class GamePanel extends JPanel implements Runnable {
 		this.addKeyListener(keyH);
 		this.setFocusable(true);
 
+
+		screenX = this.screenWidth / 2 - (this.tileSize / 2);
+		screenY = this.screenHeight / 2 - (this.tileSize / 2);
 	}
 
 	public void startGameThread() {
@@ -115,6 +126,7 @@ public class GamePanel extends JPanel implements Runnable {
 
 	public void update() {
 		player.update();
+		monster.update();
 
 	}
 
@@ -128,7 +140,8 @@ public class GamePanel extends JPanel implements Runnable {
 		Graphics2D g2 = (Graphics2D) g;
 
 		tileM.draw(g2);
-		player.draw(g2);
+		player.drawRelative(g2, this, screenX, screenY);
+		monster.draw(g2);
 
 		g2.dispose();
 	}
